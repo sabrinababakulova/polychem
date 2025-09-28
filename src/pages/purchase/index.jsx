@@ -23,6 +23,12 @@ const Purchases = () => {
       name: "Manufacturer",
       searchKey: "manufacturer_name",
     },
+    {
+      id: 5,
+      name: "Creation Date",
+      searchKey: "created_at",
+      type: "date",
+    },
   ];
   const dispatch = useDispatch();
   const [statsHeader, setStatsHeader] = useState([
