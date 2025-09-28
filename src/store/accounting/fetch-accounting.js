@@ -24,9 +24,15 @@ export const fetchAccounting = createAsyncThunk(
           table: [
             accounting?.currency,
             accounting?._type?.toLowerCase() === "income"
-              ? `+ ${accounting?.transaction_amount}`
-              : `- ${accounting?.transaction_amount}`,
-            accounting?.usd_to_uzs_rate,
+              ? `+ ${accounting?.transaction_amount
+                  ?.toString()
+                  ?.replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`
+              : `- ${accounting?.transaction_amount
+                  ?.toString()
+                  ?.replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`,
+            accounting?.usd_to_uzs_rate
+              ?.toString()
+              ?.replace(/\B(?=(\d{3})+(?!\d))/g, " "),
             accounting?.transaction_type,
             accounting?.balance_type
               ?.replace("_", " ")
