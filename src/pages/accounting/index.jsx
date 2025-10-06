@@ -40,6 +40,12 @@ const Accounting = () => {
       searchKey: "staff_name",
     },
   ];
+  const {
+    data: balance,
+    accounting,
+    filters: savedFilters,
+    search,
+  } = useSelector(getAccounting);
   const [openDetails, setOpenDetails] = useState(false);
   const [chosenDetails, setChosenDetails] = useState(null);
   const getDetails = (id) => {
@@ -55,12 +61,6 @@ const Accounting = () => {
   const restrictions = useGetRoleRestrictions();
   const location = useLocation();
   const secondPath = location.search.split("=")[1];
-  const {
-    data: balance,
-    accounting,
-    filters: savedFilters,
-    search,
-  } = useSelector(getAccounting);
   const { data: counters } = useSelector(getCounters);
   const setSearchString = (search) => dispatch(updateSearch(search));
   const setSavedFilters = (filters) => dispatch(updateFilters(filters));
@@ -246,7 +246,7 @@ const Accounting = () => {
               <p>
                 {
                   counters?.find(
-                    (item) => item?.id === chosenDetails?.counter_agent_id,
+                    (item) => item?.id === chosenDetails?.counter_agent_id
                   )?.name
                 }
               </p>

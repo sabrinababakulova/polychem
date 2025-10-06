@@ -411,8 +411,8 @@ export const STAFF_TABLE_HEADERS = [
 ];
 
 export const ACCOUNTING_TABLE_HEADERS = [
-  "Currency",
   "Transaction Amount",
+  "Converted Amount",
   "Convertion Rate",
   "Transaction Type",
   "Balance Involved",

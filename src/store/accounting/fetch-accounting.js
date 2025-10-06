@@ -18,18 +18,26 @@ export const fetchAccounting = createAsyncThunk(
         );
         throw new Error(e);
       });
+      const CURRENCY = {
+        uzs: "uzs",
+        usd: "usd",
+      };
       const responseData = response.data?.map((accounting) => {
+        const isPlus =
+          accounting?._type?.toLowerCase() === "income" ? "+" : "-";
+        const isUsd = accounting?.currency === CURRENCY.usd;
         return {
           ...accounting,
           table: [
-            accounting?.currency,
-            accounting?._type?.toLowerCase() === "income"
-              ? `+ ${accounting?.transaction_amount
-                  ?.toString()
-                  ?.replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`
-              : `- ${accounting?.transaction_amount
-                  ?.toString()
-                  ?.replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`,
+            `${isPlus} ${isUsd ? "USD" : "UZS"} ${accounting?.transaction_amount
+              ?.toString()
+              ?.replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`,
+            `${isPlus} ${isUsd ? "UZS" : "USD"} ${(isUsd
+              ? accounting?.transaction_amount * accounting.usd_to_uzs_rate
+              : accounting?.transaction_amount / accounting.usd_to_uzs_rate
+            )
+              ?.toString()
+              ?.replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`,
             accounting?.usd_to_uzs_rate
               ?.toString()
               ?.replace(/\B(?=(\d{3})+(?!\d))/g, " "),
