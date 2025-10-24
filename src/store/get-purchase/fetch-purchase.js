@@ -19,9 +19,15 @@ export const fetchPurchase = createAsyncThunk(PURCHASE, async (data, thunk) => {
       throw new Error(e);
     });
     const correctData = response?.data?.map((purchase) => {
-      const chosenProducts = products?.data?.filter((item) =>
+      const chosenProductsList = products?.data?.filter((item) =>
         purchase?.prods?.includes(item?.id)
       );
+      const chosenProduct = products?.data?.find(
+        (item) => item?.id === purchase?.product_id
+      );
+      const chosenProducts =
+        chosenProductsList.length > 0 ? chosenProductsList : [chosenProduct];
+
       return {
         ...purchase,
         totalPrice: Number((purchase?.quantity * purchase?.price)?.toFixed(2)),
@@ -45,7 +51,9 @@ export const fetchPurchase = createAsyncThunk(PURCHASE, async (data, thunk) => {
           product: chosenProducts.map((item) => item?.name).join(", "),
           manufacturer: purchase?.manufacturer_name,
           "Quantity (tons)": purchase?.quantity,
-          "Available quantity": Number(purchase?.available_quantity).toFixed(2),
+          "Available quantity": Number(purchase?.available_quantity)?.toFixed(
+            2
+          ),
           "Price per ton": purchase?.price
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, " "),
@@ -63,3 +71,4 @@ export const fetchPurchase = createAsyncThunk(PURCHASE, async (data, thunk) => {
     return e;
   }
 });
+//JP02RU265

@@ -39,12 +39,12 @@ export const Header = ({
   useEffect(() => {
     const currentMeetings = meetings?.filter(
       (meeting) =>
-        meeting.start_time === format(new Date(), "yyyy-MM-dd HH:mm:00"),
+        meeting?.start_time === format(new Date(), "yyyy-MM-dd HH:mm:00")
     );
     if (currentMeetings?.length !== 0) {
       setMeetingDetails(currentMeetings[0]);
     }
-  }, [new Date().getMinutes(), meetings]);
+  }, [meetings]);
   return (
     <>
       {meetingDetails?.meeting_with && (

@@ -127,7 +127,7 @@ export const Table = ({
   };
 
   const handleSearch = (e) => {
-    setSearchString(e?.target?.value);
+    setSearchString(e?.target?.value?.trim() ?? "");
   };
 
   const handleSelect = (item) => {
@@ -163,15 +163,13 @@ export const Table = ({
   };
 
   useEffect(() => {
-    if (search) {
-      const temp = [...tableItems];
-      const filtered = temp.filter((item) =>
-        item?.table?.some((each) =>
-          each?.toString().toLowerCase().includes(search?.toLowerCase())
-        )
-      );
-      setFilteredItems(filtered);
-    }
+    const temp = [...tableItems];
+    const filtered = temp.filter((item) =>
+      item?.table?.some((each) =>
+        each?.toString().toLowerCase().includes(search?.toLowerCase())
+      )
+    );
+    setFilteredItems(filtered);
   }, [search, tableItems, isNew]);
 
   useEffect(() => {
