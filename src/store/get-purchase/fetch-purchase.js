@@ -62,7 +62,9 @@ export const fetchPurchase = createAsyncThunk(PURCHASE, async (data, thunk) => {
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, " "),
           paid: purchase?.paid,
-          "To be paid": purchase?.pay_left,
+          "To be paid": purchase?.pay_left
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, " "),
         },
       };
     });
